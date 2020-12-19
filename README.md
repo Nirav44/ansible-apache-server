@@ -5,4 +5,4 @@ this ansible play-book for start httpd service or any service related by apache 
 
 for start service 
 # ansible-playbook apache.yml 
-for verbose mode u can add -v, -vv, -vvv, -vvvv, -vvvvv , only 5 limit of verbose mode ;) its sufficent for statics. 
+for verbose mode u can add -v, -vv, -vvv, -vvvv, -vvvvv , only 5 limit of verbose mode ;) its suffcient for statics. 
