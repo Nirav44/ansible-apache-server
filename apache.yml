@@ -1,0 +1,69 @@
+- hosts: all 
+  vars: 
+           x: "hello world " 
+           y: "variable"
+  vars_prompt:
+         - name: name
+           private: no
+           prompt: "enter your name "
+
+         - name: system_name
+           private: no
+           prompt: "enter your system name"
+                 
+  
+  tasks:
+   - debug: 
+           msg: "{{ x }}"
+   - file:
+           state: directory
+           path: "/dvd1"
+   - mount:  
+           # mount the dvd for pre-package 
+           src: "/dev/cdrom"
+           path: "/dvd1"
+           state: mounted 
+           fstype: iso9660
+   - yum_repository:
+          # add reposatiry in yum repo list 
+           name: "REPO1"
+           baseurl: "/dvd1/BaseOS"
+           gpgcheck: no
+           description: "dvd repo list" 
+   - yum_repository:
+           name: "REPO2"
+           baseurl: "/dvd1/AppStream"
+           gpgcheck: no
+           description: "dvd repo list" 
+   - package: 
+           # install httpd service on system
+           name: "httpd"
+           state: present
+   - copy: 
+           # COPY module give to add content in destination dir.
+           dest: "/var/www/html/index.html"
+           
+           content: "this is server belongs to {{ name }} and system name is: {{system_name}} "
+   - service:
+           # start service by service module
+           name: "httpd"
+           state: started 
+           enabled: yes
+   
+   - firewalld:
+           # stop firewall for security reasons 
+           
+           port: 80/tcp
+           state: enabled
+           permanent: yes
+           immediate: yes
+
+        # if you use redhat 8 and after this playbook not working then u can rum command module ans stop selinnux by give value by  0
+        #  - command: "setenforce 0"
+        
+
+
+
+
+
+
