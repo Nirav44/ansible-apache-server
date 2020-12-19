@@ -1,8 +1,10 @@
 - hosts: all 
+  # in inventory u can add specify group
   vars: 
            x: "hello world " 
            y: "variable"
   vars_prompt:
+  # this module pop-up when u first time run this code and we use this information in our web page for host out site. 
          - name: name
            private: no
            prompt: "enter your name "
@@ -16,6 +18,7 @@
    - debug: 
            msg: "{{ x }}"
    - file:
+            # create a directory 
            state: directory
            path: "/dvd1"
    - mount:  
